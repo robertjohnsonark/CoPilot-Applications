@@ -1,0 +1,35 @@
+﻿@model CoPilot.Models.Story
+@{
+    ViewBag.Title = "Story Details";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="storyDetails">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <p>
+                    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn-xs btn-cp" })
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.StoryId }, new { @class = "btn-xs btn-cp" })
+                </p>
+                <p>
+
+                    @Html.LabelFor(model => model.Headline)
+                    @Html.DisplayFor(model => model.Headline)<br />
+
+                    @Html.LabelFor(model => model.StoryDateTime)
+                    @Html.DisplayFor(model => model.StoryDateTime)<br />
+
+                    @Html.LabelFor(model => model.Status)
+                    @Html.DisplayFor(model => model.Status)<br />
+
+                    @Html.LabelFor(model => model.Article)<br />
+                    <div class="background75">
+                        @Html.Raw(HttpUtility.HtmlDecode(Model.Article))
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

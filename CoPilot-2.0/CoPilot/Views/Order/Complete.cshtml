@@ -1,0 +1,95 @@
+﻿@model CoPilot.Models.Order
+@{
+    ViewBag.Title = "Orders";
+    ViewBag.Message = "Wren Thicket Market";
+    var hasWeight = false;
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="orderComplete">
+                <h4 class="panel-title">Step 3 of 3 - Checkout Complete, Check your email for confirmation!</h4>
+            </div>
+            <div class="panel-body background75">
+                <p>
+                    <b>THANK–YOU @ViewBag.FullName FOR YOUR PRE-ORDER!</b> A confirmation email will be sent to you.
+                    Your pre-ordered items will be available on Saturday between 9AM and 12 Noon at the Wren Thicket
+                    Market location, 1041 S. School Ave. in Fayetteville. Please visit each farm or artisan’s table
+                    to pick up the pre-ordered items. See manager if you cannot locate the farm or artisan, your items
+                    likely will be there. Please be aware that products are filled in the order they are
+                    received, at times there may be limited supply.
+                </p>
+                <br/>
+                <p>
+                    Payment is made directly to the farm or artisan at pick up. Payment can be cash or check. Some
+                    vendors do accept credit/debit cards. SNAP/EBT customers please see the market manager before
+                    visiting farm vendors.
+                </p>
+                <br/>
+                <p>
+                    If you have to cancel a pre-order after the pre-ordering period is closed, please email Deb,
+                    market manager.
+                </p>
+                <br/>
+                <p>
+                    We do understand things happen unexpectedly at times but please be mindful of any pre-orders you
+                    have placed. Forgotten pre-orders means missed sales and wasted products for our farmers/artisans,
+                    and if the product is limited in amounts, missed purchases by other customers. Thanks!
+                </p>
+                <br/>
+                <p>
+                    Any questions or comments please email Deb, market manager: <span><a href="mailto:manager@wrenthicketmarket.com">Manager@WrenThicketMarket.com</a></span>
+                </p>
+                <br/>
+                <p>
+                    Forgot something? Go back to the @Html.ActionLink("Market", "Index", "Home")
+                </p>
+                <br/>
+                <p>
+                    <table id="cart-summary" class="table table-bordered table-responsive table-hover table-striped">
+                        <tr>
+                            <th>Partner</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Price (each)</th>
+                            <th>Total</th>
+                        </tr>
+                        @foreach (var item in Model.OrderDetails)
+                        {
+                            <tr id="row-@item.OrderDetailId">
+                                <td>@Html.ActionLink(linkText: item.Product.Partner.Name, actionName: "Partner", controllerName: "Home", routeValues: new {partnerid = item.Product.PartnerId}, htmlAttributes: new {@class = "btn-xs btn-cp"})</td>
+                                <td>@Html.ActionLink(linkText: item.Product.Title, actionName: "Details", controllerName: "Store", routeValues: new {productid = item.ProductId}, htmlAttributes: new {@class = "btn-xs btn-cp"})</td>
+                                <td id="item-count-@item.OrderDetailId">@item.Quantity</td>
+                                <td>@item.UnitPrice</td>
+                                @if (item.Product.SoldByWeight)
+                                {
+                                    <td>@Html.Raw("TBD")</td>
+                                    hasWeight = true;
+                                }
+                                else
+                                {
+                                    <td>@((item.UnitPrice*item.Quantity).ToString("c"))</td>
+                                }
+                            </tr>
+                        }
+                        <tr>
+                            <td class="text-center"><b>Total</b></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            @if (hasWeight)
+                            {
+                                <td><b>TBD</b></td>
+                            }
+                            else
+                            {
+                                <td id="cart-total"><b>@Model.Total.ToString("c")</b></td>
+                            }
+                        </tr>
+                    </table>
+                </p>
+                <p>TBD: Order total may vary, some meat prices are listed per pound and actual meat price will vary depending on weight of package. See details of the individual product to estimate package size.</p>
+            </div>
+        </div>
+    </div>
+</div>

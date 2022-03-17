@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CoPilot.Models.Story>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="storyList">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <p>
+                    @Html.ActionLink(linkText: "Operations", actionName: "Edit", controllerName: "AppSettings", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                    @Html.ActionLink(linkText: "Create Blog Post", actionName: "Create", controllerName: "Story", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                </p>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            <label>
+                                <input id="ShowHiddenObjects" type="checkbox" data-function="ShowHiddenObjects" data-url="/Story/Index" value="">
+                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                Show hidden blog posts, You cannot delete data in the market
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-responsive table-hover table-striped">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Headline)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StoryDateTime)
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(i => item.Headline)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(i => item.StoryDateTime)
+                            </td>
+                            <td>
+                                @Html.ActionLink(linkText: "Edit", actionName: "Edit", controllerName: "Story", routeValues: new {id = item.StoryId}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                                @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "Story", routeValues: new {id = item.StoryId}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                                @Html.ActionLink(linkText: "Hide", actionName: "Delete", controllerName: "Story", routeValues: new {id = item.StoryId}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                            </td>
+                            @*<td>@Html.Raw(HttpUtility.HtmlDecode(item.Article))</td>*@
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

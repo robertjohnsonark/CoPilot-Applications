@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoPilot", "CoPilot\CoPilot.csproj", "{C2C38EE9-01B7-4929-B7E9-086077D1AB58}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5A87C40F-1245-4D66-B9FF-88134051BF76}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoPilot.Tests", "CoPilot.Tests\CoPilot.Tests.csproj", "{BF0E22F8-A487-439D-B79A-8FF1FF8E9BBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventEmailJob", "EventEmailJob\EventEmailJob.csproj", "{614A6C08-C18C-4FC4-9B06-3C946EE8D96B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailWebJob", "EmailWebJob\EmailWebJob.csproj", "{86EE217D-2B50-4F08-BED7-ADA58BE525FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageETLJob", "ImageETLJob\ImageETLJob.csproj", "{4D50038A-A666-4128-8604-FBF4F290310E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2C38EE9-01B7-4929-B7E9-086077D1AB58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2C38EE9-01B7-4929-B7E9-086077D1AB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2C38EE9-01B7-4929-B7E9-086077D1AB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2C38EE9-01B7-4929-B7E9-086077D1AB58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF0E22F8-A487-439D-B79A-8FF1FF8E9BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF0E22F8-A487-439D-B79A-8FF1FF8E9BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF0E22F8-A487-439D-B79A-8FF1FF8E9BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF0E22F8-A487-439D-B79A-8FF1FF8E9BBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{614A6C08-C18C-4FC4-9B06-3C946EE8D96B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614A6C08-C18C-4FC4-9B06-3C946EE8D96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614A6C08-C18C-4FC4-9B06-3C946EE8D96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614A6C08-C18C-4FC4-9B06-3C946EE8D96B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86EE217D-2B50-4F08-BED7-ADA58BE525FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86EE217D-2B50-4F08-BED7-ADA58BE525FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86EE217D-2B50-4F08-BED7-ADA58BE525FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86EE217D-2B50-4F08-BED7-ADA58BE525FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D50038A-A666-4128-8604-FBF4F290310E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D50038A-A666-4128-8604-FBF4F290310E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D50038A-A666-4128-8604-FBF4F290310E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D50038A-A666-4128-8604-FBF4F290310E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

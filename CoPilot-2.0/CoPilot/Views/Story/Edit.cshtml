@@ -1,0 +1,73 @@
+﻿@model CoPilot.Models.Story
+@{
+    ViewBag.Title = "Edit Story";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="storyEdit">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                @using (Html.BeginForm())
+                {
+
+                    <div class="text-danger col-md-12">@Html.ValidationSummary(true)</div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.ActionLink("Back to List", "Index", new {}, new {@class = "btn-xs btn-cp"})
+                            @Html.ActionLink(linkText: "Preview", actionName: "Details", controllerName: "Story", routeValues: new { id = Model.StoryId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                            <button type="submit" class="btn-xs btn-cp">Save</button><br/>
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(model => model.StoryId)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Headline, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Headline, new {@class = "form-control"})
+                            <div class="text-danger">
+                                @Html.ValidationMessageFor(model => model.Headline)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StoryDateTime, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.StoryDateTime, new {@class = "form-control"})
+                            <div class="text-danger">
+                                @Html.ValidationMessageFor(model => model.StoryDateTime)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Status, Model.Status.ToSelectList(), new { @class = "form-control" })
+                            <div class="text-danger">
+                                @Html.ValidationMessageFor(model => model.Status)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Article, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10"></div>
+                        <div class="col-md-12">@Html.TextAreaFor(model => model.Article, new { @class = "form-control" } )</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    var editor = CKEDITOR.replace('Article', {
+        allowedContent: true,
+        resize_enabled: true,
+        extraPlugins: 'imagebrowser',
+        imageBrowser_listUrl: '/Story/ImageList',
+        width: '90%'
+    });
+
+}

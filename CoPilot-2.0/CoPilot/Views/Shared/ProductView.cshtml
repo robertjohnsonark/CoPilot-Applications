@@ -1,0 +1,70 @@
+﻿@using Microsoft.Ajax.Utilities
+@model System.Collections.Generic.IEnumerable<CoPilot.Models.Product>
+<div class="row">
+    @{ int i = 0; }
+    @foreach (var item in Model)
+    {
+        i++;
+        <div class="col-sm-6 col-lg-4 more-row-padding">
+            <div class="col-border">
+                <p class="col-header">
+                    @Html.ActionLink(linkText: item.Title, actionName: "Details", controllerName: "Store", routeValues: new { productid = item.ProductId }, htmlAttributes: new { @class = "col-header", @title = item.Title })
+                </p>
+                <p>
+                    by @Html.ActionLink(linkText: item.Partner.Name, actionName: "Partner", controllerName: "Home", routeValues: new { partnerId = item.PartnerId }, htmlAttributes: new { @class = "btn-xs btn-cp", @title = item.Partner.Name })
+                </p>
+                <p>
+                    @if (item.Units == null)
+                    {
+                        @Html.Raw("_")
+
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Units)
+                    }
+                    <label class="price">
+                        @Html.DisplayFor(modelItem => item.Price)
+                        @if (item.SoldByWeight)
+                        {
+                            @Html.Raw(" /LB")
+                            ;
+                        }
+                    </label>
+                </p>
+
+                @if (ViewBag.AppViewModel.MarketEnabled == "True")
+                {
+                    <p>
+                        <select class="select-qty form-control" data-name="selectQty" id="@("selectQty" + item.ProductId)" data-id="@item.ProductId">
+                            <option data-value="1">1</option>
+                            <option data-value="2">2</option>
+                            <option data-value="3">3</option>
+                            <option data-value="4">4</option>
+                            <option data-value="5">5</option>
+                            <option data-value="6">6</option>
+                            <option data-value="7">7</option>
+                            <option data-value="8">8</option>
+                            <option data-value="9">9</option>
+                            <option data-value="10">10</option>
+                        </select>
+                        <button type="button" class="btn-xs buy-button" data-function="AddProductToCart" id="@("AddProductToCart" + item.ProductId)" data-id="@item.ProductId" data-url='@Url.Content("~/Order/AddToCart")'>Buy</button>
+                    </p>
+                }
+            </div>
+    </div>
+        //force first column to always populate.
+        if (i % 3 == 0)
+        {
+            <div class="clearfix visible-lg-block"></div>
+        }
+        if (i % 2 == 0)
+        {
+            <div class="clearfix visible-sm-block visible-md-block"></div>
+        }
+    }
+</div>
+
+@section Scripts {
+}
+

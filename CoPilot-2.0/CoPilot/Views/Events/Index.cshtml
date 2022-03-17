@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CoPilot.Models.Event>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="eventList">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <div id="update-message">
+                </div>
+                <p>
+                    @Html.ActionLink(linkText: "Operations", actionName: "Edit", controllerName: "AppSettings", routeValues: new {}, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                    @*@Html.ActionLink(linkText: "Create New", actionName: "Create", controllerName: "Events", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })*@
+                </p>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            <label>
+                                <input id="ShowHiddenObjects" type="checkbox" data-function="ShowHiddenObjects" data-url="/Event/Index" value="">
+                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                Show hidden events, you cannot delete data in the market
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-responsive table-hover table-striped">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EventName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EventDateTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EventName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EventDateTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+                                @Html.ActionLink(linkText: "Edit", actionName: "Edit", controllerName: "Events", routeValues: new {id = item.EventId}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                                @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "Events", routeValues: new {id = item.EventId}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                                @Html.ActionLink(linkText: "Hide", actionName: "Delete", controllerName: "Events", routeValues: new {id = item.EventId}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+
+                                @*@Html.ActionLink("Edit", "Edit", new {id = item.EventId}) |
+                                    @Html.ActionLink("Details", "Details", new {id = item.EventId}) |
+                                    @Html.ActionLink("Delete", "Delete", new {id = item.EventId})*@
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

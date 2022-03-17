@@ -1,0 +1,66 @@
+﻿@model CoPilot.Models.LoginModel
+@{
+    ViewBag.Title = "Log in to Wren Thicket Market";
+    ViewBag.Message = "Wren Thicket Market";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="logIn">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                @using (@Html.BeginForm("Login", "Account", new {}, FormMethod.Post, new {@id = "AccountLogin", @class = "form-horizontal"}))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Log in" class="btn-xs btn-cp"/>
+                            @Html.ActionLink(linkText: "Register", actionName: "Register", controllerName: "Account", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"}) if you don't have an account
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.UserName, new {@class = "form-control"})
+                            <div class="text-danger">
+                                @Html.ValidationMessageFor(m => m.UserName)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+                            <div class="text-danger">
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" value="true" />
+                                    <input type="hidden" data-val="true" id="RememberMe" name="RememberMe" value="true" />
+                                    Remember me?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <b>Would you like to use the </b>@Html.ActionLink(linkText: "Lost Password Tool", actionName: "LostPassword", controllerName: "Account", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" }) <b>to reset your password?</b>
+                            <br />
+                            <b>Would you like us use the </b> @Html.ActionLink(linkText: "Recover User Name Tool", actionName: "EmailUserName", controllerName: "Account", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" }) <b> to get the user name associated with this email in our records?</b>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+}

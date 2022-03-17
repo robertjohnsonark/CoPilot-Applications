@@ -1,0 +1,16 @@
+﻿@model IEnumerable<CoPilot.Models.Category>
+@{
+    ViewBag.Title = "Store";
+    ViewBag.Message = "Wren Thicket Market";
+}
+
+<div class="pagebody">
+<h2>Shop our Product Categories</h2>
+
+<ul>
+    @foreach (var category in Model)
+    {
+        <li>@Html.ActionLink(category.Name, "Browse", new { category = category.Name })</li>
+    }
+</ul>
+</div>

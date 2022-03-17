@@ -1,0 +1,47 @@
+﻿@model CoPilot.ViewModels.PartnerPhotosViewModel
+@{
+    ViewBag.Title = "Partner Details";
+    ViewBag.Message = "Wren Thicket Market";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="partnerDetails">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <p>
+                    @Html.ActionLink(linkText: Model.Partner.Name, actionName: "Partner", controllerName: "Home", routeValues: new { partnerId = Model.Partner.PartnerId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                </p>
+                <div class="photo-left">
+                    <h2>@Model.Partner.Name</h2>
+                    @*@Html.LabelFor(model => model.Partner.Name)
+                        @Html.DisplayFor(model => model.Partner.Name)<br />
+                        @Html.LabelFor(model => model.Partner.Owners)*@
+                    @Html.DisplayFor(model => model.Partner.Owners)<br/>
+                    @*@Html.LabelFor(model => model.Partner.Email)*@
+                    @Html.DisplayFor(model => model.Partner.Email)<br/>
+                    @*@Html.LabelFor(model => model.Partner.Location)*@
+                    @Html.DisplayFor(model => model.Partner.Location)<br/><br/>
+                    @*@Html.LabelFor(model => model.Partner.ShortDescription)*@
+                    @Html.DisplayFor(model => model.Partner.ShortDescription, new {@class = "descriptions"})<br/>
+                    @*@Html.LabelFor(model => model.Partner.LongDescription)*@
+                    @*@Html.DisplayFor(model => model.Partner.LongDescription, new { @class = "descriptions" })<br />*@
+                    @*@Html.LabelFor(model => model.Partner.PartnerType)*@
+                    <br/>
+                    @Html.DisplayFor(model => model.Partner.PartnerType)<br/>
+                    @*@Html.LabelFor(model => model.Partner.Status)*@
+                    @Html.DisplayFor(model => model.Partner.Status)<br/>
+                </div>
+                <div class="photo-right">
+                    @Html.Partial("PhotoView", Model.Photos)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ @section Scripts {
+    $("div.item:eq(0)").addClass('active');
+
+}

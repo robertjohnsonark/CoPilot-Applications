@@ -1,0 +1,76 @@
+﻿@using CoPilot.Models
+@model CoPilot.Models.Order
+@{
+    ViewBag.Title = "Complete Order";
+    ViewBag.Message = "Wren Thicket Market";
+    var hasWeight = false;
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="orderConfirm">
+                <h4 class="panel-title">Step 2 of 3 - Click the Submit Pre-Order button below to place your pre-order!</h4>
+            </div>
+            <div class="panel-body background75">
+                @using (Html.BeginForm())
+                {
+                    <p class="alert-danger">
+                        <b>Your order has not been placed yet! Click the Submit Pre-Order button below to confirm your order!</b>
+                    </p>
+                    <p><b>Name</b> @ViewBag.FullName</p>
+                    <p><b>Email</b> @ViewBag.EmailAddress</p>
+                    <p><b>Phone</b> @ViewBag.Phone</p>
+                    <p>
+                        <table id="cart-summary" class="table table-bordered table-responsive table-hover table-striped">
+                            <tr>
+                                <th>Partner</th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price (each)</th>
+                                <th>Total</th>
+                            </tr>
+                            @foreach (var item in (List<ProductSummary>)ViewBag.ShoppingCartViewModel.CartItems)
+                            {
+                                <tr id="row-@item.RecordId">
+                                    <td>@Html.ActionLink(linkText: item.PartnerName, actionName: "Partner", controllerName: "Home", routeValues: new { partnerId = item.PartnerId }, htmlAttributes: new { @class = "btn-xs btn-cp" })</td>
+                                    <td>@Html.ActionLink(linkText: item.Title, actionName: "Details", controllerName: "Store", routeValues: new { productId = item.ProductId }, htmlAttributes: new { @class = "btn-xs btn-cp" })</td>
+                                    @*<td>@item.PartnerName</td>
+                                        <td>@item.Title</td>*@
+                                    <td id="item-count-@item.RecordId">@item.Count</td>
+                                    <td>@item.Price</td>
+                                    @if (item.SoldByWeight)
+                                    {
+                                        <td>@Html.Raw("TBD")</td>
+                                        hasWeight = true;
+                                    } else { 
+                                        <td>@((item.Price * item.Count).ToString("c"))</td>
+                                    }
+                                </tr>
+                            }
+                            <tr>
+                                <td class="text-center"><b>Total</b></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                @if (hasWeight)
+                                {
+                                    <td><b>TBD</b></td>
+                                }
+                                else
+                                {
+                                    <td id="cart-total"><b>@Model.Total.ToString("c")</b></td>
+                                }
+                            </tr>
+                        </table>
+                    </p>
+                    <p>TBD: Order total may vary, some meat prices are listed per pound and actual meat price will vary depending on weight of package. See details of the individual product to estimate package size.</p>
+                    <p>
+                        <button type="submit" class="btn-xs btn-cp">Submit Pre-order</button>
+                        @Html.ActionLink(linkText: "Back to Step 1", actionName: "Review", controllerName: "Order", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

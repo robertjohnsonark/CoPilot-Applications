@@ -1,0 +1,121 @@
+﻿@model CoPilot.ViewModels.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Market Basket";
+    ViewBag.Message = "Wren Thicket Market";
+    var orderHasWeight = false;
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="orderReview">
+                @if (Model.CartItems.Count > 0)
+                {
+                    <h4 class="panel-title">Step 1 of 3 - Review your account info and market basket</h4>
+                }
+                else
+                {
+                    <h4 class="panel-title">To see current order, click orders button below.</h4>
+                }
+            </div>
+            <div class="panel-body background75">
+                <div id="update-message">
+                    @ViewBag.StatusMessage
+                    @if (Model.CartItems.Count == 0)
+                    {
+                        <a href="/Order/Index">Orders</a>
+                    }
+                </div>
+                <br/>
+                <div id="market-basket">
+                    <p>
+                        <b>Account Info:</b>
+                    </p>
+                    <p>@ViewBag.FullName</p>
+                    <p>@ViewBag.EmailAddress</p>
+                    <p>@ViewBag.Phone</p>
+                    <p>
+                        If account information needs revised click edit account. @Html.ActionLink(linkText: "Edit Account", actionName: "Edit", controllerName: "Account", routeValues: new {id = ViewBag.UserId}, htmlAttributes: new {@class = "btn-xs btn-cp"})<br/>
+                    </p>
+                    <br/>
+                    @if (Model.CartItems.Count > 0)
+                    {
+                        <p>
+                            <b>Market Basket:</b>
+                        </p>
+                        <table id="cart-summary" class="table table-bordered table-responsive table-hover table-striped">
+                            <tr>
+                                <th>Partner</th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price (each)</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <tr id="row-@item.RecordId" soldbyweight=@item.SoldByWeight.ToString()>
+                                    <td>@Html.ActionLink(linkText: item.PartnerName, actionName: "Partner", controllerName: "Home", routeValues: new { partnerid = item.PartnerId }, htmlAttributes: new { @class = "btn-xs btn-cp" })</td>
+                                    <td>@Html.ActionLink(linkText: item.Title, actionName: "Details", controllerName: "Store", routeValues: new { productid = item.ProductId }, htmlAttributes: new { @class = "btn-xs btn-cp" })</td>
+                                    <td id="item-count-@item.RecordId">@item.Count</td>
+                                    <td>
+                                        <span id="item-price-@item.ProductId" data-value="@item.Price"></span>
+                                        @item.Price
+                                        @if (item.SoldByWeight)
+                                        {
+                                            orderHasWeight = true;
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.SoldByWeight)
+                                        {
+                                            <span id="item-total-@item.ProductId" class="">@Html.Raw("TBD")</span>
+                                        }
+                                        else
+                                        {
+                                            <span id="item-total-@item.ProductId">@((item.Price * item.Count).ToString("c"))</span>
+                                        }
+                                    </td>
+                                    <td><a href="#" class="btn-xs btn-cp" id="@("RemoveProductFromCart" + @item.ProductId)" name="@("RemoveProductFromCart" + @item.ProductId)" data-function="RemoveProductFromCart" data-id="@item.RecordId" data-url='@Url.Content("~/Order/RemoveFromCart")'>Remove from Basket</a></td>
+                                </tr>
+                            }
+                            <tr>
+                                <td class="text-center"><b>Total</b></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td id="cart-total">
+                                    @if (orderHasWeight)
+                                    {
+                                        @Html.Raw("TBD")
+                                    }
+                                    else
+                                    {
+                                        <b>@Model.CartTotal.ToString("c")</b>
+                                    }
+                                    </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        @Html.HiddenFor(model => orderHasWeight, new { id = "orderHasWeight" })
+                        <p>TBD: Order total may vary, some meat prices are listed per pound and actual meat price will vary depending on weight of package. See details of the individual product to estimate package size.</p>
+                    }
+                </div>
+                <br/>
+                <p>
+                    @if (Model.CartCount > 0 && Model.OrderId > 0)
+                    {
+                        <button class="btn-xs btn-cp" id="UpdateOrderFromBasket" data-function="UpdateOrderFromBasket" data-id=@Model.OrderId data-url='@Url.Content("~/Order/UpdateOrder")'>Add Basket to Order</button>
+                    }
+                    else if (Model.CartCount > 0)
+                    {
+                        @Html.ActionLink(linkText: "Go to Step 2 of check out", actionName: "Confirm", controllerName: "Order", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                    }
+                    @Html.ActionLink(linkText: "Go Back to Shopping", actionName: "Index", controllerName: "Home", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+}

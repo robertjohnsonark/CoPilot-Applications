@@ -1,0 +1,116 @@
+﻿@model CoPilot.Models.Event
+@{
+    ViewBag.Title = "Edit Event";
+}
+
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="eventEdit">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.ActionLink(linkText: "Back to List", actionName: "Index", controllerName: "Events", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                            <input type="submit" value="Save" class="btn-xs btn-cp"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button id="btnBuildNewsLetter" data-id="0" data-function="BuildNewsLetter" data-url='@Url.Content("~/Events/BuildNewsLetter")' class="btn-xs btn-cp">Build News Letter</button>
+                            <button id="btnSendNewsLetter" data-id="0" data-function="SendNewsLetter" data-url='@Url.Content("~/Events/SendNewsLetter")' class="btn-xs btn-cp">Send News Letter</button>
+                            <br/>
+                            <br/>
+                        </div>
+                    </div>
+                    <div class="text-danger col-md-12">@Html.ValidationSummary(true)</div>
+                    @Html.HiddenFor(model => model.EventId)
+                    @Html.HiddenFor(model => model.UserId)
+                    @Html.HiddenFor(model => model.ContentList)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EventName, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.EventName, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.EventName, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EventDateTime, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.EventDateTime, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.EventDateTime, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EventStartDateTime, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.EventStartDateTime, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.EventStartDateTime, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EventEndDateTime, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.EventEndDateTime, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.EventEndDateTime, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OrderingStartDateTime, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.OrderingStartDateTime, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.OrderingStartDateTime, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OrderingEndDateTime, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.OrderingEndDateTime, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.OrderingEndDateTime, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Status, Model.Status.ToSelectList(), htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Status, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.EventHtml, new {@class = "control-label"})
+                        </div>
+                        <div class="col-md-12">
+                            @Html.TextAreaFor(model => model.EventHtml, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EventHtml, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    var editor = CKEDITOR.replace('EventHtml', {
+        allowedContent: true,
+        resize_enabled: true,
+        extraPlugins: 'imagebrowser',
+        imageBrowser_listUrl: '/Story/ImageList',
+        width: '90%'
+    });
+
+}

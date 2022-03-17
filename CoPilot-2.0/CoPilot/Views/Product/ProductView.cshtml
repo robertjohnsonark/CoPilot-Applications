@@ -1,0 +1,97 @@
+﻿@using Microsoft.Ajax.Utilities
+@model IEnumerable<CoPilot.Models.Product>
+<div class="row">
+    <br/>
+    <div class="col-xs-6">
+        <b>Status</b> <button id="ProductStatusActivate" data-function="ProductStatusActivate" class="btn-xs btn-cp">Activate All</button>
+    </div>
+    <div class="col-xs-6"><b>Highlighted</b> <button id="HighlightProducts" data-function="HighlightProducts" class="btn-xs btn-cp">Select All</button>
+    </div>
+</div>
+<div class="row">
+        @{ int i = 0; }
+        @foreach (var item in Model)
+        {
+            i++;
+            <div data-status=@item.Status class="col-sm-6 col-lg-4 more-row-padding">
+                <div class="col-border">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <b>@Html.DisplayNameFor(model => model.Title)</b>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>@Html.DisplayFor(modelItem => item.Title), <b>Units </b>
+                                @if (item.Units == null)
+                                {
+                                    @Html.Raw("_")
+
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.Units)
+                                }
+                                <b>Price </b>
+                                @Html.DisplayFor(modelItem => item.Price)
+                                @if (item.SoldByWeight)
+                                {
+                                    @Html.Raw(" /LB");
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <b>@Html.DisplayNameFor(model => model.Partner.Name)</b>
+                        </div>
+                        <div class="col-xs-9">
+                            @Html.DisplayFor(modelItem => item.Partner.Name)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <b>@Html.DisplayNameFor(model => model.Category.Name)</b>
+                        </div>
+                        <div class="col-xs-9">
+                            @Html.DisplayFor(modelItem => item.Category.Name)
+                        </div>
+                    </div>
+                    @*status/highlighted*@
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <b>@Html.DisplayNameFor(model => model.Status)</b>
+                            @Html.DropDownListFor(modelItem => item.Status, item.Status.ToSelectList(), new { id = "Status-" + item.ProductId, @class = "form-control input-xs"})
+                        </div>
+                        <div class="col-xs-5">
+                            <b>@Html.DisplayNameFor(model => model.Highlighted)</b>
+                            @Html.CheckBoxFor(modelItem => item.Highlighted, new { id = "Highlighted-" + item.ProductId, @class = "checkbox-inline" })
+                        </div>
+                    </div>
+                    @*buttons*@
+                    <div class="row">
+                        <div class="col-xs-4">
+                            @Html.ActionLink(linkText: "Edit", actionName: "Edit", controllerName: "Product", routeValues: new { productId = item.ProductId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "Product", routeValues: new { productId = item.ProductId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.ActionLink(linkText: "Hide", actionName: "Delete", controllerName: "Product", routeValues: new { productId = item.ProductId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            //force first column to always populate.
+            if (i % 3 == 0)
+            {
+                <div class="clearfix visible-lg-block"></div>
+            }
+            if (i % 2 == 0)
+            {
+                <div class="clearfix visible-sm-block visible-md-block"></div>
+            }
+    }
+    </div>
+
+@section Scripts {
+    
+}

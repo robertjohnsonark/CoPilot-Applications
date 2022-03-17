@@ -1,0 +1,186 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+// .toolbar-title {
+//     display: -webkit-flex;
+//     display: flex;
+//     -webkit-flex-direction: row;
+//     flex-direction: row;
+//     -webkit-align-items: left;
+//     align-items: left;
+//     -webkit-justify-content: left;
+//     justify-content: left;
+//   }
+.build-version{
+    text-align:center;
+}
+ 
+  .toolbar {
+    padding-top: 10px !important;
+    padding-bottom: 5px !important;
+    max-height: 60px !important;
+}
+.right-buttons{
+    padding-top: 10px !important;
+    padding-bottom: 5px !important;
+}
+.toolbar-background {
+    background-color: #0a768b !important;
+  }
+  .alert-title{
+      background-color: #0a768b;
+      color:#fff;
+      padding:10px 20px !important;
+      margin:0px !important;
+  }
+  .alert-head{
+    padding:0px !important;
+  }
+ 
+.toolbar-title{
+    color:#fff;
+    overflow: inherit !important;
+    text-align:center;
+    background-color: #0a768b !important;
+    padding:10px;
+}
+//  .alert-message{
+//   padding: 16px 16px 21px !important;
+// }
+.menu-inner{
+    .toolbar-ios ion-title{
+        padding: 0 10px 1px !important;
+        white-space: inherit !important;
+    }
+    .toolbar-title{
+    color:#fff;
+    white-space: inherit !important;
+}
+}
+
+ .alert-sub-title {
+    padding:8px;
+}
+.alert-message{
+    padding:8px;
+}
+.alert-md .alert-sub-title{
+    padding:15px;
+}
+.alert-ios .alert-sub-title{
+    padding:15px;
+}
+.alert-md .alert-message, .alert-md .alert-input-group {
+    padding:15px;
+}
+.alert-ios .alert-message, .alert-ios .alert-input-group {
+    padding:15px;
+}
+.alert-md .alert-button-group{
+    padding:0px !important;
+}
+.alert-ios .alert-button-group{
+    padding:0px !important;
+}
+page-attach-secondary-rwic{
+
+} 
+.note-md{
+    color:#000 !important;
+    font-weight:400 !important;
+}
+.footer{
+    background:#fff;
+}
+.ion-list-header{
+    padding-left: 16px;
+    padding-left: 16px;
+    position: relative;
+    border-bottom: .55px solid #c8c7cc;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    color: #333;
+    background:#efefef;
+}
+
+page-accept-reject-popup {
+    ion-label{
+        overflow:unset !important;
+        text-overflow: unset !important;
+        white-space: unset !important;
+        
+    }
+    .toolbar-ios ion-title{
+        padding: 0 0px 1px !important;
+    }
+}
+
+ion-modal ion-backdrop {
+    visibility: visible !important;
+    z-index: -999;
+    }
+    @media only screen and (min-height: 768px) and (min-width: 768px){
+    .modal-wrapper {
+        
+       
+        top: calc(10%) !important;
+        position: absolute !important;
+        width: 600px !important;
+        height: 800px !important;
+    }
+
+}
+ .alert-wrapper{
+    z-index:9999;
+}
+.ai-Alarm:before, .ion-ios-ai-Alarm:before, .ion-ios-ai-Alarm-outline:before, .ion-md-ai-Alarm:before, .ion-md-ai-Alarm-outline:before{
+    font-size: 22px !important;
+}
+.ai-Alert:before, .ion-ios-ai-Alert:before, .ion-ios-ai-Alert-outline:before, .ion-md-ai-Alert:before, .ion-md-ai-Alert-outline:before{
+    font-size: 22px !important;
+}
+.accordion-menu{
+    ion-label{
+        overflow:unset !important;
+        text-overflow: unset !important;
+        white-space: unset !important;
+        
+    }
+    .label{
+        margin: 0px 0px 0px 0 !important;
+    }
+
+}
+
+
+ 
+@media only screen and (min-device-height: 250px) and (max-device-height: 450px) {
+    .side-menu-content{
+        height:380px !important;
+         overflow: auto;
+    }
+    }
+
+    .toastClass {
+        .toast-wrapper {
+            transform: translateY(70px) !important;
+            z-index: -9999 !important;
+        }
+    }
+
+    

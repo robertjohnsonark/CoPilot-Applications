@@ -1,0 +1,60 @@
+﻿@model CoPilot.ViewModels.PartnerPhotosViewModel
+@{
+    ViewBag.Title = "Edit Partner";
+}
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-6">
+        <div class="container-fluid">
+            <div class="panel-group first-panel">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="partnerEdit">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <h4 class="panel-title">@ViewBag.Title</h4>
+                            </div>
+                            <div class="col-xs-4 visible-xs">
+                                <div class="pull-right">
+                                    <button type="button" class="btn-xs btn-cp" data-toggle="offcanvas">
+                                        Photos
+                                    </button>
+                                    @*<span class="glypicon glyphicon-arrow-right"></span>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body background75">
+                        @Html.ActionLink(linkText: "Back to List", actionName: "Index", controllerName: "Partner", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                        <button type="button" class="btn-xs btn-cp" data-function="SavePartner" id="@("SavePartner" + Model.Partner.PartnerId)" data-id="@Model.Partner.PartnerId" title="Save">Save</button>
+                        <div class="h4" id="update-message">
+                            Edit partner data and click the Save button.
+                        </div>
+                        @Html.Partial("PartnerView", Model.Partner)
+                    </div>
+                </div>
+            </div><!--panel-group-->
+        </div><!--container-->
+    </div>
+    <div class="col-xs-6 sidebar-offcanvas" id="sidebar">
+        <div class="container-fluid">
+            <div class="panel-group first-panel">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="orderPhotos">
+                        <h4 class="panel-title">Edit Photos</h4>
+                    </div>
+                    <div class="panel-body background75">
+                        <button type="button" class="btn-xs btn-cp" id="SelectAllPhotos" data-function="SelectAllPhotos" data-value="true" data-filter="partner" data-id="@Model.Partner.PartnerId">Select All</button>
+                        <button type="button" class="btn-xs btn-cp" id="SelectAllPhotosFalse" data-function="SelectAllPhotos" data-value="false" data-filter="partner" data-id="@Model.Partner.PartnerId">Deselect All</button>
+                        <button type="button" class="btn-xs btn-cp" id="AddPhoto" data-function="AddPhoto" data-id="@Model.Partner.PartnerId" title="Add an Image">Add an Image to Storage</button>
+                        <div class="h4">
+                            Click the checkbox to select highlighted items. Drag the photos to change the display order. Click Save to save changes!
+                        </div>
+                        @Html.Partial("PhotoSortView", Model.Photos)
+                    </div>
+                </div>
+            </div><!--sidebar panel-group-->
+        </div><!--sidebar container-->
+    </div><!--sidebar-->
+</div><!--row offcanvas-->
+
+@section Scripts {
+}

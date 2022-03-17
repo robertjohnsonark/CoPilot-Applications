@@ -1,0 +1,148 @@
+﻿@model CoPilot.ViewModels.ProductPhotosViewModel
+@{
+    ViewBag.Title = "Edit Product";
+}
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-6">
+        <div class="container-fluid">
+            <div class="panel-group first-panel">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="productEdit">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <h4 class="panel-title">@ViewBag.Title</h4>
+                            </div>
+                            <div class="col-xs-4 visible-xs">
+                                <div class="pull-right">
+                                    <button type="button" class="btn-xs btn-cp btn-xs" data-toggle="offcanvas">
+                                        Photos
+                                    </button>
+                                    @*<span class="glypicon glyphicon-arrow-right"></span>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body background75">
+                        @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn-xs btn-cp" })
+                        <button type="button" class="btn-xs btn-cp" data-function="SaveProduct" id="@("SaveProduct" + Model.Product.ProductId)" data-id="@Model.Product.ProductId" title="Save">Save</button>
+                        <div class="h4" id="update-message">
+                            Here you can edit product data.
+                        </div>
+                        <form class="form-horizontal" role="form">
+                            @Html.HiddenFor(model => model.Product.CategoryId)
+                            @Html.HiddenFor(model => model.Product.PartnerId)
+                            @Html.HiddenFor(model => model.Product.ProductId)
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Product.CategoryId, "Category", new {@class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.Product.CategoryId, (SelectList) ViewBag.CategoryNames, new {@class = "form-control input-sm"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Product.CategoryId)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Product.PartnerId, "Partner", new {@class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.Product.PartnerId, (SelectList) ViewBag.PartnerNames, new {@class = "form-control input-sm"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Product.PartnerId)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Product.Title, new {@class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.Product.Title, new {@class = "form-control input-sm"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Product.Title)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Product.Units, new {@class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.Product.Units, new {@class = "form-control input-sm"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Product.Units)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Product.Price, new {@class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.Product.Price, new {@class = "form-control input-sm"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Product.Price)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Product.Highlighted, new {@class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @Html.CheckBoxFor(model => model.Product.Highlighted, new {@class = "checkbox"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Product.Highlighted)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Product.Description, new {@class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Product.Description, 5, 40, new {@class = "form-control input-sm"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Product.Description)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Product.Notes, new {@class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Product.Notes, 5, 40, new {@class = "form-control input-sm"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Product.Notes)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Product.Status, new {@class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.Product.Status, Model.Product.Status.ToSelectList(), new {@class = "form-control input-sm"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Product.Status)
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-xs btn-cp" data-function="SaveProduct" id="@("SaveProduct" + Model.Product.ProductId)" data-id="@Model.Product.ProductId" title="Save">Save</button>
+                        </form>
+                    </div><!--panel-body-->
+                </div><!--panel-->
+            </div>><!--panel-group-->
+        </div>><!--container-->
+    </div>
+    <div class="col-xs-6 sidebar-offcanvas" id="sidebar">
+        <div class="container-fluid">
+            <div class="panel-group first-panel">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="orderPhotos">
+                        <h4 class="panel-title">Edit Photos</h4>
+                    </div>
+                    <div class="panel-body background75">
+                        <button type="button" class="btn-xs btn-cp" id="SelectAllPhotos" data-function="SelectAllPhotos" data-value="true" data-filter="partner" data-id="@Model.Product.ProductId">Select All</button>
+                        <button type="button" class="btn-xs btn-cp" id="SelectAllPhotosFalse" data-function="SelectAllPhotos" data-value="false" data-filter="partner" data-id="@Model.Product.ProductId">Deselect All</button>
+                        <div class="h4">
+                            Click the checkbox to select highlighted items. Drag the photos to change the display order. Click Save to save changes!
+                        </div>
+                        @Html.Partial("PhotoSortView", Model.Photos)
+                    </div>
+                </div><!--sidebar panel-->
+            </div>><!--sidebar panel-group-->
+        </div>><!--sidebar container-->
+    </div><!--sidebar-->
+</div>><!--col offcanvas-->
+
+        @section Scripts {
+
+            @*var gProductId = @Html.Raw(Json.Encode(Model.Product.ProductId));*@
+
+        }

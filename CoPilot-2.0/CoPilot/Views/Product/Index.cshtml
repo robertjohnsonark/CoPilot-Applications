@@ -1,0 +1,73 @@
+﻿@model CoPilot.ViewModels.ProductEditorViewModel
+@{
+    ViewBag.Title = "Product Index";
+}
+
+<style>
+    .list-inline {
+        display: block;
+    }
+
+        .list-inline li {
+            display: inline-block;
+        }
+
+    .centered-text {
+        text-align: center;
+    }
+</style>
+
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="productListHeading">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <div id="update-message">
+                </div>
+                <div>
+                    @Html.ActionLink(linkText: "Operations", actionName: "Edit", controllerName: "AppSettings", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                    @Html.ActionLink(linkText: "Create New", actionName: "Create", controllerName: "Product", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                    <button id="SaveProductSettings" data-function="SaveProductSettings" class="btn-xs btn-cp">Save Settings</button>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="checkbox">
+                            <label>
+                                <input id="ShowHiddenObjects" data-function="ShowHiddenObjects" data-url="/Product/Index" type="checkbox" value="">
+                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                Show hidden products, You cannot delete data in the market
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="span12 centered-text">
+                        <p>
+                            <ul class="list-inline">
+                                @for (int i = 65; i < 91; i++)
+                                {
+                                    <li>@Html.ActionLink(((char)i).ToString(), "Index", "Product", new { index = (char)i }, new { @data_id = "ProductFilter", @data_function = "ProductFilter" }) </li>
+                                }
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.DropDownList("CategoryFilter", (SelectList)Model.CategoryNames, "--Choose Your Category--", new { @class = "form-control", @data_id = "CategoryFilter", @data_function = "CategoryFilter" })
+                        @Html.DropDownList("PartnerFilter", (SelectList)Model.PartnerNames, "--Choose Your Partner--", new { @class = "form-control", @data_id = "PartnerFilter", @data_function = "PartnerFilter" })
+                        <div class="panel-body" id="productList">
+                            @Html.Partial("ProductView", Model.Products)
+                        </div>
+                        <button id="SaveProductSettings" data-function="SaveProductSettings" class="btn-xs btn-cp">Save Settings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+}

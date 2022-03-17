@@ -1,0 +1,229 @@
+﻿@model CoPilot.Models.Photo
+@{
+    ViewBag.Title = "Upload an Image";
+}
+
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="photoEdit">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                @using (Html.BeginForm("EditPhoto", "Partner", new { photoId = @ViewBag.PhotoId, partnerId = @ViewBag.PartnerId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <fieldset>
+                        <div id="update-message">
+                        </div>
+                        <div class="form-group">
+                            @Html.ActionLink(linkText: "Back", actionName: "Edit", controllerName: "Partner", routeValues: new { partnerId = @ViewBag.PartnerId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                            @*@Html.ActionLink(linkText: "Delete", actionName: "DeletePhoto", controllerName: "Partner", routeValues: new { photoId = @ViewBag.PhotoId }, htmlAttributes: new { @class = "btn-xs btn-cp" })*@
+                            <button type="button" id="btnDeletePhoto" data-id="@ViewBag.PhotoId" data-val="@ViewBag.PartnerId" class="btn-xs btn-cp">Delete</button>
+                            <button type="submit" class="btn-xs btn-cp">Upload</button>
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.PartnerId)
+                            @Html.HiddenFor(model => model.ProductId)
+                            @Html.HiddenFor(model => model.PartnerPhoto)
+                            @Html.HiddenFor(model => model.ContainerName)
+                            @Html.HiddenFor(model => model.X)
+                            @Html.HiddenFor(model => model.Y)
+                            @Html.HiddenFor(model => model.Width)
+                            @Html.HiddenFor(model => model.Height)
+                            @Html.HiddenFor(model => model.FileTimeStamp)
+                            @Html.HiddenFor(model => model.FileName)
+                            @Html.HiddenFor(model => model.Uri)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Url, new { @class = "control-label" })
+                            @Html.EditorFor(model => model.IsUrl, new { @class = "form-control" })<br/>
+                            @Html.EditorFor(model => model.Url, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Url)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Flickr, new { @class = "control-label" })
+                            @Html.EditorFor(model => model.IsFlickr, new { @class = "form-control" })<br />
+                            @Html.Editor("FlickrQuery", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Flickr)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.File, new { @class = "control-label" })
+                            @Html.EditorFor(model => model.IsFile, new { @class = "form-control" })<br />
+                            @Html.FileFor(model => model.File)
+                            @Html.ValidationMessageFor(model => model.File)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ShortDescription, new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.ShortDescription, 5, 60, new { @class = "form-control" })<br />
+                            @Html.LabelFor(model => model.LongDescription, new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.LongDescription, 10, 60, new { @class = "form-control" })<br />
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationSummary(true)
+                        </div>
+                    </fieldset>
+                }
+            </div>
+            <div id="confirmBox">
+                <div class="message"></div>
+                <span class="yes">Yes</span>
+                <span class="no">No</span>
+            </div>
+            <div class="panel-body background75">
+                <div id="upload-cut">
+                    @if (String.IsNullOrEmpty(Model.Uri)) {
+                        <img alt="Field for image cutting" id="preview" src="@Url.Content("~/Content/empty.png")" />
+                    }
+                    else
+                    {
+                        <img alt="Field for image cutting" id="preview" src="@Model.Uri" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalConfirmYesNo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 id="lblTitleConfirmYesNo" class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p id="lblMsgConfirmYesNo"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="btnYesConfirmYesNo"
+                        type="button" class="btn btn-primary">
+                    Yes
+                </button>
+                <button id="btnNoConfirmYesNo"
+                        type="button" class="btn btn-default">
+                    No
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    //Get the checkboxes and disable them
+    var boxes = $('input[type=checkbox]').attr('disabled', true);
+
+    //Get the preview image and set the onload event handler
+    var preview = $('#preview').load(function () {
+        setPreview();
+        ias.setOptions({
+            x1: 0,
+            y1: 0,
+            x2: $(this).width(),
+            y2: $(this).height(),
+            show: true
+        });
+    });
+
+    //Set the 4 coordinates for the cropping
+    var setPreview = function (x, y, w, h) {
+        $('#X').val(x || 0);
+        $('#Y').val(y || 0);
+        $('#Width').val(w || preview[0].naturalWidth);
+        $('#Height').val(h || preview[0].naturalHeight);
+        console.log("params", x, y, w, h);
+    };
+
+    //Initialize the image area select plugin
+    var ias = preview.imgAreaSelect({
+        handles: true,
+        instance: true,
+        parent: 'body',
+        onSelectEnd: function (s, e) {
+            var scale = preview[0].naturalWidth / preview.width();
+            var _f = Math.floor;
+            setPreview(_f(scale * e.x1), _f(scale * e.y1), _f(scale * e.width), _f(scale * e.height));
+        }
+    });
+
+    //Check one of the checkboxes
+    var setBox = function (filter) {
+        $('button').attr('disabled', false);
+        boxes.attr('checked', false)
+        .filter(filter).attr({ 'checked': true, 'disabled': false });
+    };
+
+    //Initial state of X, Y, Width and Height is 0 0 1 1
+    setPreview(0, 0, 1, 1);
+
+    //Fetch Flickr images
+    var fetchImages = function (query) {
+        $.getJSON('http://www.flickr.com/services/feeds/photos_public.gne?jsoncallback=?', {
+            tags: query,
+            tagmode: "any",
+            format: "json"
+        }, function (data) {
+            var screen = $('<div />').addClass('waitScreen').click(function () {
+                $(this).remove();
+            }).appendTo('body');
+            var box = $('<div />').addClass('flickrImages').appendTo(screen);
+            $.each(data.items, function (i, v) {
+                console.log(data.items[i]);
+                $('<img />').addClass('flickrImage').attr('src', data.items[i].media.m).click(function () {
+                    $('#Flickr').val(this.src).change();
+                    screen.remove();
+                }).appendTo(box);
+            });
+        });
+    };
+
+    //Flickr
+    $('#FlickrQuery').change(function () {
+        fetchImages(this.value);
+    });
+
+    $('#Flickr').change(function () {
+        setBox('#IsFlickr');
+        preview.attr('src', this.value);
+    });
+
+    //What happens if the URL changes?
+    $('#Url').change(function () {
+        setBox('#IsUrl');
+        preview.attr('src', this.value);
+    });
+
+    //What happens if the File changes?
+    $('#File').change(function (evt) {
+        var f = evt.target.files[0];
+        var reader = new FileReader();
+
+        if (!f.type.match('image.*')) {
+            alert("The selected file does not appear to be an image.");
+            return;
+        }
+
+        setBox('#IsFile');
+        reader.onload = function (e) { preview.attr('src', e.target.result); };
+        reader.readAsDataURL(f);
+    });
+
+    //What happens if any checkbox is checked ?!
+    boxes.change(function () {
+        setBox(this);
+        $('#' + this.id.substr(2)).change();
+    });
+
+    // $('button').attr('disabled', true);
+
+    $('form').submit(function () {
+        $('button').attr('disabled', true).text('Please wait ...');
+    });
+
+    $("button[id^='btnDeletePhoto']").click(function () {
+        ShowConfirmYesNo();
+    });
+
+}

@@ -1,0 +1,26 @@
+{
+  "name": "sivakumar",
+  "version": "1.0.0",
+  "description": "node express server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "engines": {
+    "node": ">=6.9.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^7.4.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mssql": "4.0.4",
+    "path": "^0.12.7",
+    "q": "^1.5.1",
+    "sql": "^0.78.0"
+  },
+  "devDependencies": {
+    "@types/node": "^9.4.7"
+  }
+}

@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Home";
+    ViewBag.Message = "Wren Thicket Market";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="contactWTM">
+                <h4 class="panel-title">Contact Wren Thicket Market</h4>
+            </div>
+            <div class="panel-body background75">
+                @Html.ActionLink(linkText: "Market", actionName: "Index", controllerName: "Home", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                <p>
+                    <span><b>Market Manager: Deb (Debra Elam-McDonald)</b></span>
+                    <br/>
+                    <span><a href="mailto:Manager@WrenThicketMarket.com">Manager@WrenThicketMarket.com</a></span>
+                </p>
+            </div>
+            <div class="panel-heading" role="tab" id="contactPT">
+                <h4 class="panel-title">Contact Personal Telemetry</h4>
+            </div>
+            <div class="panel-body background75">
+                <p>
+                    <b>Support:</b>
+                    <br />
+                    <a href="mailto:admin@iotmap.net">admin@iotmap.net</a>
+                </p>
+                <p>
+                    <b>Information:</b>
+                    <br />
+                    <a href="mailto:admin@iotmap.net">admin@iotmap.net</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+﻿@using System.Collections.Generic
+@using CoPilot.Models
+@model CoPilot.ViewModels.ProductPhotosViewModel
+@{
+    ViewBag.Title = "Product Details";
+    ViewBag.Message = "Wren Thicket Market";
+    List<string> photos = ViewBag.Photos;
+}
+
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="productHead">
+                <h4 class="panel-title">@Model.Product.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <p>
+                            @Html.ActionLink(linkText: "Market", actionName: "Index", controllerName: "Home", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                            @Html.ActionLink(linkText: Model.Product.Partner.Name, actionName: "Partner", controllerName: "Home", routeValues: new { partnerId = Model.Product.Partner.PartnerId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                        </p>
+                    </div>
+                    @if (Model.Photos.Count > 0)
+                    {
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            @Html.Partial("PhotoView", Model.Photos)
+                        </div>
+                    }
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <p>
+                            @if (ViewBag.AppViewModel.MarketEnabled == "True")
+                            {
+                                <select class="select-qty" data-name="selectQty" id="@("selectQty" + Model.Product.ProductId)" data-id="@Model.Product.ProductId">
+                                    <option data-value="1">1</option>
+                                    <option data-value="2">2</option>
+                                    <option data-value="3">3</option>
+                                    <option data-value="4">4</option>
+                                    <option data-value="5">5</option>
+                                    <option data-value="6">6</option>
+                                    <option data-value="7">7</option>
+                                    <option data-value="8">8</option>
+                                    <option data-value="9">9</option>
+                                    <option data-value="10">10</option>
+                                </select>
+                                <button type="button" class="btn-xs btn-cp" data-function="AddProductToCart" id="@("AddProductToCart" + Model.Product.ProductId)" data-id="@Model.Product.ProductId" data-url='@Url.Content("~/Order/AddToCart")'>Buy</button>
+                            }
+                        </p>
+                        <br/>
+                        <p>
+                            <b>Partner:</b>
+                            @Model.Product.Partner.Name
+                        </p>
+                        <p>
+                            <b>Size/Unit(s):</b>
+                            @Html.DisplayFor(model => model.Product.Units)
+                        </p>
+                        <p>
+                            <b>Price:</b>
+                            @Html.DisplayFor(model => model.Product.Price)
+                        </p>
+                        <p>
+                            <b>Description:</b>
+                            @Model.Product.Description
+                        </p>
+                        <p>
+                            <b>Notes:</b>
+                            @Html.DisplayFor(model => model.Product.Notes)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+}

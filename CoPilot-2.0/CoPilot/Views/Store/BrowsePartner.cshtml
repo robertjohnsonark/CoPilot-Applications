@@ -1,0 +1,32 @@
+﻿@using System.Web.Mvc.Html
+@model System.Collections.Generic.IEnumerable<CoPilot.Models.Product>
+@{
+    ViewBag.Title = "Home";
+    ViewBag.Message = "Wren Thicket Market";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default background75">
+            <div class="panel-heading" role="tab" id="productHead">
+                <h4 class="panel-title">Shop Products from @ViewBag.Partner.Name</h4>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @Html.ActionLink(linkText: "Market", actionName: "Index", controllerName: "Home", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                    @Html.ActionLink(linkText: "All Partners", actionName: "Partners", controllerName: "Home", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                    @Html.ActionLink(linkText: Model.FirstOrDefault().Partner.Name, actionName: "Partner", controllerName: "Home", routeValues: new { partnerId = Model.FirstOrDefault().Partner.PartnerId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                </p>
+                @*product list*@
+                <div id="productlist">
+                    <div id="ajaxResponse">
+                        @Html.Partial("ProductView", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+}
+

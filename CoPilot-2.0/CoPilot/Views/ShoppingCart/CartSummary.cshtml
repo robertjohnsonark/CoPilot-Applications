@@ -1,0 +1,28 @@
+﻿@model CoPilot.ViewModels.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Basket";
+    ViewBag.Message = "Wren Thicket Market";
+}
+<div id="shoppingcart">
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (ViewBag.CartCount > 0)
+        {
+        }
+        else
+        {
+        }
+    }
+</div>
+
+<script type="text/javascript">
+    // ShoppingCartViewModel
+    var cartCount = @Html.Raw(Json.Encode(Model.CartCount));
+    var cartTotal = @Html.Raw(Json.Encode(Model.CartTotal));
+    var cartSummary = @Html.Raw(Json.Encode(Model.CartSummary));
+    var cart = {
+        cartCount: cartCount,
+        cartTotal: cartTotal,
+        cartSummary: cartSummary
+    };
+</script>

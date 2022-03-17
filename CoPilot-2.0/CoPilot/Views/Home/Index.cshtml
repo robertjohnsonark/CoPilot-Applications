@@ -1,0 +1,156 @@
+﻿@model CoPilot.ViewModels.StoreFrontViewModel
+@{
+    ViewBag.Title = "Home";
+    ViewBag.Message = "Wren Thicket Market";
+}
+<div class="container">
+    @*******************************************@
+    @*INFO section*@
+    @*******************************************@
+    <nav id="myNavbar2" class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a role="button" class="navbar-brand" data-toggle="collapse" data-parent="#accordion" href="#welcomeHide" aria-expanded="true" aria-controls="welcomeHide" id="linkInfo">
+                <div class="hidden-sm hidden-md hidden-lg">Wren Thicket Market</div>
+                <div class="hidden-xs">Info</div>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="/Home/About" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Home/About">Market</a></li>
+                        <li><a href="/Home/Partners">Partners</a></li>
+                        <li><a href="/Home/FAQs">FAQs</a></li>
+                        <li><a href="/Home/Contact">Contact</a></li>
+                    </ul>
+                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="dropdown">
+                        <a href="/Home/Account" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Account/Edit">Edit Account</a></li>
+                            <li><a href="/Account/ChangePassword">Change Password</a></li>
+                            <li><a href="/Account/LostPassword">Lost Password</a></li>
+                            <li><a href="/Order/Index">Orders</a></li>
+                            <li><a href="/Order/Review">Market Basket</a></li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="dropdown">
+                        <a href="/Home/Account" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Account/LostPassword">Lost Password</a></li>
+                        </ul>
+                    </li>
+                }
+                @if (User.IsInRole("Administrator"))
+                {
+                    <li><a href="/AppSettings/Edit">Operations</a></li>
+                }
+            </ul>
+        </div>
+    </nav>
+    <div class="panel-group" id="accordionInfo" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-collapse collapse in" id="welcomeHide" role="tabpanel" aria-labelledby="welcomeHead">
+                <div class="panel-body background75">
+                    <span id="welcomemessage"></span>
+                </div>
+                <div class="panel-subtitle">
+                    <div class="row">
+                        <div class="col-xs-2">News</div>
+                        <div class="col-xs-10">
+                            <select class="form-control input-sm" id="SelectStory" data-function="GetStory" data-url='@Url.Content("~/Home/GetStory")'>
+                                @foreach (var story in Model.Stories)
+                                {
+                                    <option id="story @story.Id" data-id="@story.Id">@story.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body background75">
+                    <div id="story">
+                        @Html.Partial("StoryView", Model.CurrentPost)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*******************************************@
+    @*PRODUCT LIST section*@
+    @*******************************************@
+    <div class="panel-group">
+        <div class="panel panel-default">
+            @*<div class="panel-heading" role="tab" id="productHead">
+                    <h4 class="panel-title">Products</h4>
+                </div>*@
+            <div class="panel-body">
+                @*product filter tabs*@
+
+                <ul class="nav nav-tabs" id="filterTab">
+                    <li class="active"><a data-toggle="tab" href="#categories">Shop by Category</a></li>
+                    <li><a data-toggle="tab" href="#partners">Shop by Partner</a></li>
+                </ul>
+
+                <div class="row tab-content">
+
+                    <div class="col-xs-1 col-padding-0">
+                        <div class="glyphicon glyphicon-chevron-left" id="chevron-left"></div>
+                    </div>
+
+                    <div id="categories" class="tab-pane fade active in col-xs-10 col-padding-0">
+                        <div class="container-fluid nowrap">
+                            <div class="col-all" id="highlighted1">
+                                <a class="btn-xs btn-cp" id="filter -1" data-function="GetProducts" data-filter="-1" data-id="-1" data-url='@Url.Content("~/Home/GetProducts")'>Highlighted Items</a>
+                            </div>
+                            @foreach (var category in Model.Categories)
+                            {
+                                <div class="col-all">
+                                    <a class="btn-xs btn-cp" id="filter @category.Id" data-function="GetProducts" data-filter="0" data-id="@category.Id" data-url='@Url.Content("~/Home/GetProducts")'>@category.Name</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div id="partners" class="tab-pane fade col-xs-10 col-padding-0">
+                        <div class="container-fluid nowrap">
+                            <div class="col-all" id="highlighted2">
+                                <a class="btn-xs btn-cp" id="filter -2" data-function="GetProducts" data-filter="-1" data-id="-1" data-url='@Url.Content("~/Home/GetProducts")'>Highlighted Items</a>
+                            </div>
+                            @foreach (var partner in Model.Partners)
+                            {
+                                <div class="col-all">
+                                    <a class="btn-xs btn-cp" id="filter @partner.Id" data-function="GetProducts" data-filter="1" data-id="@partner.Id" data-url='@Url.Content("~/Home/GetProducts")'>@partner.Name</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-xs-1 col-padding-0">
+                        <div class="glyphicon glyphicon-chevron-right" id="chevron-right"></div>
+                    </div>
+
+                </div>
+            </div>
+            @*product list*@
+            <div class="panel-body" id="productlist">
+                @Html.Partial("ProductView", Model.Products)
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+}

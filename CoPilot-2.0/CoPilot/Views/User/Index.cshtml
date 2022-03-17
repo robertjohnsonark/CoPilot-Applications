@@ -1,0 +1,97 @@
+﻿@model IEnumerable<CoPilot.Models.UserProfile>
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .list-inline {
+        display: block;
+    }
+
+        .list-inline li {
+            display: inline-block;
+        }
+
+    .centered-text {
+        text-align: center;
+    }
+</style>
+
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="userList">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <div id="update-message">
+                </div>
+                <p>
+                    @Html.ActionLink(linkText: "Operations", actionName: "Edit", controllerName: "AppSettings", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                    @Html.ActionLink(linkText: "Create New", actionName: "Create", controllerName: "User", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                    @*<button type="button" class="btn-xs btn-cp" id="BuildUserProfiles" data-function="BuildUserProfiles" data-value="true" data-filter="" data-id="">Build User Profiles</button>*@
+                </p>
+                <div class="span12 centered-text">
+                    <p>
+                        <ul class="list-inline">
+                            @for (int i = 65; i < 91; i++)
+                            {
+                                <li>@Html.ActionLink(((char)i).ToString(), "Index", "User", new { index = (char)i }, null) </li>
+                            }
+                        </ul>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            <label>
+                                <input id="ShowHiddenObjects" type="checkbox" data-function="ShowHiddenObjects" data-url="/User/Index" value="">
+                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                Show hidden users, You cannot delete data in the market
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-responsive table-hover table-striped">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LastName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmailAddress)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Phone)
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmailAddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @Html.ActionLink(linkText: "Edit", actionName: "Edit", controllerName: "User", routeValues: new { id = item.UserId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                                @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "User", routeValues: new { id = item.UserId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                                @Html.ActionLink(linkText: "Hide", actionName: "Delete", controllerName: "User", routeValues: new { id = item.UserId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

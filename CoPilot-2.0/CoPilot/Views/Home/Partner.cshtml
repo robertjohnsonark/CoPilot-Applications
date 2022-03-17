@@ -1,0 +1,58 @@
+﻿@using CoPilot.Models
+@model CoPilot.ViewModels.PartnerPhotosViewModel
+@{
+    ViewBag.Title = "Home";
+    ViewBag.Message = "Wren Thicket Market";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="productHead">
+                <h4 class="panel-title">@Model.Partner.Name</h4>
+            </div>
+            <div class="panel-body background75">
+                <div class="row">
+                    @if (Model.Photos.Count > 0)
+                    {
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            @Html.Partial("PhotoView", Model.Photos)
+                        </div>
+                    }
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        @if (@Model.Partner.Status == PartnerStatus.Active)
+                        {
+                            <p>
+                                @Html.ActionLink(linkText: "Market", actionName: "Index", controllerName: "Home", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                                @Html.ActionLink(linkText: "All Partners", actionName: "Partners", controllerName: "Home", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                                @Html.ActionLink(linkText: "Products", actionName: "BrowsePartner", controllerName: "Store", routeValues: new { partnerid = @Model.Partner.PartnerId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                            </p>
+                        }
+                        else
+                        {
+                            if (@Model.Partner.Owners != "Alice Kennedy")
+                            {
+                                <p>Sorry! @Model.Partner.Name will not be selling their products at the market this week.</p>
+                            }
+                            <p>
+                                @Html.ActionLink(linkText: "Back to List", actionName: "Partners", controllerName: "Home", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                            </p>
+                        }
+                        <p>@Html.DisplayFor(model => model.Partner.Owners)</p>
+                        <p>@Html.DisplayFor(model => model.Partner.Location)</p>
+                        <p class="read">@Html.DisplayFor(model => model.Partner.ShortDescription, new { @class = "description" })</p>
+                        <p>
+                            <div class="hidden-sm hidden-md hidden-lg">
+                                <a href="#" id="readMore" data-function="ReadMore">Read More</a>
+                            </div>
+                        </p>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+}

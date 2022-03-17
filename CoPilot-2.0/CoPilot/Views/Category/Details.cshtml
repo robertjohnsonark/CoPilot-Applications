@@ -1,0 +1,24 @@
+﻿@model CoPilot.Models.Category
+@{
+    ViewBag.Title = "Category Details";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="catDetails">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <p>
+                    @Html.ActionLink(linkText: "Back to List", actionName: "Index", controllerName: "Category", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                </p>
+                @Html.LabelFor(model => model.Name)
+                @Html.DisplayFor(model => model.Name)<br/>
+                @Html.LabelFor(model => model.Description)
+                @Html.DisplayFor(model => model.Description)<br/>
+                @Html.LabelFor(model => model.Status)
+                @Html.DisplayFor(model => model.Status)<br/>
+            </div>
+        </div>
+    </div>
+</div>

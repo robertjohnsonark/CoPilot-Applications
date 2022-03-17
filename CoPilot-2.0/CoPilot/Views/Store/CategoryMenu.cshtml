@@ -1,0 +1,11 @@
+﻿@model IEnumerable<CoPilot.Models.Category>
+
+<nav id="operations">
+    <ul>
+        @foreach (var category in Model)
+        {
+            <li>@Html.ActionLink(category.Name, "Browse", "Store", new { Category = category.Name }, null)
+            </li>
+        }
+    </ul>
+</nav>

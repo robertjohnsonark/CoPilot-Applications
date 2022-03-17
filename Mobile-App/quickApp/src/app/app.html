@@ -1,0 +1,26 @@
+<ion-menu persistent="true" [content]="content" (ionClose)="collapseMenuOptions()">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Welcome {{displayLoginName}} | {{jobTitle}}</ion-title>
+      <!-- <ion-title>{{ (sideMenuSettings.accordionMode ? '{{displayNameLogin}}' : 'Default') + ' menu' }}</ion-title> -->
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+    <!-- Side Menu -->
+    <side-menu-content [settings]="sideMenuSettings" [options]="options" (selectOption)="selectOption($event)"></side-menu-content>
+
+
+  </ion-content>
+  <ion-footer>
+    <!-- <button ion-button full round (click)="logout()" position="bottom">Logout</button> -->
+    <ion-label class="col-md-2 build-version">App Version:
+      <b>{{appVersion}} </b>
+    </ion-label>
+  </ion-footer>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

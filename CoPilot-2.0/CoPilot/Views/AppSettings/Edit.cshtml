@@ -1,0 +1,77 @@
+﻿@model CoPilot.Models.AppSetting
+@{
+    ViewBag.Title = "Wren Thicket Market Operations";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="appSettings">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <h2>Reports</h2>
+                    <p>
+                        @Html.ActionLink(linkText: "View Weekly Order Report", actionName: "WeeklyOrderReport", controllerName: "Order", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                        @Html.ActionLink(linkText: "View Weekly Vendor Report", actionName: "WeeklyVendorReport", controllerName: "Order", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                        @Html.ActionLink(linkText: "Send Weekly Manager Report", actionName: "SendManagerReport", controllerName: "Order", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                        @Html.ActionLink(linkText: "Send Weekly Order Report", actionName: "SendWeeklyOrderReport", controllerName: "Order", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                    </p>
+                    <h2>Content</h2>
+                    <p>
+                        @Html.ActionLink(linkText: "Events", actionName: "Index", controllerName: "Events", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                        @Html.ActionLink(linkText: "Orders", actionName: "Index", controllerName: "Order", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                        @Html.ActionLink(linkText: "Users", actionName: "Index", controllerName: "User", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                        @Html.ActionLink(linkText: "Partners", actionName: "Index", controllerName: "Partner", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                        @Html.ActionLink(linkText: "Categories", actionName: "Index", controllerName: "Category", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                        @Html.ActionLink(linkText: "Products", actionName: "Index", controllerName: "Product", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                        @Html.ActionLink(linkText: "Blog Posts", actionName: "Index", controllerName: "Story", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                    </p>
+
+                    @Html.HiddenFor(model => model.AppSettingId)
+                    <table>
+                        <tr>
+                            <td class="text-right"><label class="descriptions">Current Server Time</label></td>
+                            <td>@ViewBag.CurrentServerTime</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><label class="descriptions">Current Central Time</label></td>
+                            <td>@ViewBag.CurrentTime</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">@Html.LabelFor(model => model.OpenStore, "Opening Time Pre-ordering", new {@class = "descriptions"})</td>
+                            <td>@Html.DisplayTextFor(model => model.OpenStore)</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">@Html.LabelFor(model => model.CloseStore, "Closing Time Pre-ordering", new {@class = "descriptions"})</td>
+                            <td>@Html.DisplayTextFor(model => model.CloseStore)</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><label class="descriptions">Market Enabled</label></td>
+                            <td>@ViewBag.AppViewModel.MarketEnabled</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><label class="descriptions">Business Open</label></td>
+                            <td>@ViewBag.AppViewModel.BusinessOpen</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">@Html.LabelFor(model => model.StoreOpen)</td>
+                            <td>@Html.EditorFor(model => model.StoreOpen)</td>
+                        </tr>
+                        <tr>
+                            <td><button type="submit" class="btn-xs btn-cp">Save Application Settings</button></td>
+                        </tr>
+                    </table>
+                }
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+}

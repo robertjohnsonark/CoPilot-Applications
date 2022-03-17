@@ -1,0 +1,40 @@
+﻿@model CoPilot.Models.UserProfile
+@{
+    ViewBag.Title = "User Details";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="userDetails">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <p>
+                    @Html.ActionLink("Back to List", "Index", new {}, new {@class = "btn-xs btn-cp"})
+                </p>
+                @Html.LabelFor(model => model.UserId)
+                @Html.DisplayFor(model => model.UserId)<br/>
+                @Html.LabelFor(model => model.UserName)
+                @Html.DisplayFor(model => model.UserName)<br/>
+                @Html.LabelFor(model => model.LastName)
+                @Html.DisplayFor(model => model.LastName)<br/>
+                @Html.LabelFor(model => model.FirstName)
+                @Html.DisplayFor(model => model.FirstName)<br/>
+                @Html.LabelFor(model => model.EmailAddress)
+                @Html.DisplayFor(model => model.EmailAddress)<br/>
+                @Html.LabelFor(model => model.Phone)
+                @Html.DisplayFor(model => model.Phone)<br/>
+                @Html.LabelFor(model => model.StreetAddress)
+                @Html.DisplayFor(model => model.StreetAddress)<br/>
+                @Html.LabelFor(model => model.City)
+                @Html.DisplayFor(model => model.City)<br/>
+                @Html.LabelFor(model => model.State)
+                @Html.DisplayFor(model => model.State)<br/>
+                @Html.LabelFor(model => model.PostalCode)
+                @Html.DisplayFor(model => model.PostalCode)<br/>
+                @Html.LabelFor(model => model.Status)
+                @Html.DisplayFor(model => model.Status)
+            </div>
+        </div>
+    </div>
+</div>

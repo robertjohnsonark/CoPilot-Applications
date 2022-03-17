@@ -1,0 +1,25 @@
+﻿@model IEnumerable<CoPilot.Models.DisplayPhotoModel>
+<ul id="photos" class="list-inline">
+    @{
+        //int i = 0;
+        foreach (var item in Model)
+        {
+            <li>
+                <div class="thumb" style="cursor: pointer;" id="@item.Id">
+                    <img src="@item.Uri" /><br />
+                    @Html.EditorFor(m => item.PartnerPhoto)
+                    @Html.ActionLink(linkText: "Edit Photo", actionName: "EditPhoto", controllerName: "Partner", routeValues: new { photoId = item.Id, partnerId = item.PartnerId }, htmlAttributes: new { @class = "btn-xs btn-cp" })<br />
+                    @Html.HiddenFor(m => item.Id)
+                    @Html.HiddenFor(m => item.PartnerId)
+                    @Html.HiddenFor(m => item.ProductId)
+                    @Html.HiddenFor(m => item.FileName)
+                    @Html.HiddenFor(m => item.ContainerName)
+                    @Html.HiddenFor(m => item.Uri)
+                    @Html.DisplayFor(m => item.ShortDescription)
+                    @*@Html.DisplayFor(m => (item.ShortDescription.Length > 40 ? item.ShortDescription.ToString().Substring(0, 40) : item.ShortDescription))*@
+                </div>
+            </li>
+            //i++;
+        }
+    }
+</ul>

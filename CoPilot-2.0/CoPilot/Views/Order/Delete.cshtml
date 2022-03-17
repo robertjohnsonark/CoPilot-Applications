@@ -1,0 +1,43 @@
+﻿@model CoPilot.Models.Order
+@{
+    ViewBag.Title = "Cancel Order";
+    ViewBag.Message = "Wren Thicket Market";
+}
+@{
+    //var routeValues = new RouteValueDictionary();
+    //routeValues.Add("Name", "Example");
+    //routeValues.Add("UserId", "5");
+    //var attributes = new Dictionary<string, object>();
+    //attributes.Add("type", "submit");
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="orderDelete">
+                <h4 class="panel-title">Are you sure you want to cancel this order?</h4>
+            </div>
+            <div class="panel-body background75">
+                <form asp-controller="Order" asp-action="Delete" asp-route-returnurl="@ViewBag.ReturnUrl" method="post" class="form-horizontal" role="form">
+                    <p>
+                        @Html.ActionLink(linkText: "Back to List", actionName: "Index", controllerName: "Order", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                        <button type="submit" class="btn-xs btn-cp">Delete</button>
+                    </p>                    <p>
+                        Pre-orders can only be canceled online prior to the pre-order period close time of 10 am on Thursday. Contact the manager at <a href="mailto:manager@wrenthicketmarket.com">Manager@WrenThicketMarket.com</a> if pre-order must be canceled after this time.
+                    </p>
+                    @*<p>
+                            @Html.LabelFor(model => model.FirstName)
+                            @Html.DisplayFor(model => model.FirstName)
+                        </p>
+                        <p>
+                            @Html.LabelFor(model => model.LastName)
+                            @Html.DisplayFor(model => model.LastName)
+                        </p>*@
+                    <p>
+                        @Html.LabelFor(model => model.OrderDate)
+                        @Html.DisplayFor(model => model.OrderDate)
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

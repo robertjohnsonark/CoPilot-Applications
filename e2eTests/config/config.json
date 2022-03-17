@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "tparker",
+    "password": "testpass",
+    "database": "Portal2Testing",
+    "host": "PDBDEV1",
+    "dialect": "mssql"
+  },
+  "test": {
+    "username": "tparker",
+    "password": "testpass",
+    "database": "Portal2Testing",
+    "host": "PDBDEV1",
+    "dialect": "mssql"
+  },
+  "production": {
+    "username": "?",
+    "password": "?",
+    "database": "?",
+    "host": "?",
+    "dialect": "?"
+  }
+}

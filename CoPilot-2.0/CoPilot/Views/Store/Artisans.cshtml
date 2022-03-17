@@ -1,0 +1,16 @@
+﻿@model IEnumerable<CoPilot.Models.Partner>
+@{
+    ViewBag.Title = "Store";
+    ViewBag.Message = "Wren Thicket Market";
+}
+
+<div class="pagebody">
+<h2>Shop our Partners</h2>
+
+<ul>
+    @foreach (var partner in Model)
+    {
+        <li>@Html.ActionLink(partner.Name, "BrowsePartner", new { partnerid = partner.PartnerId })</li>
+    }
+</ul>
+</div>

@@ -1,0 +1,268 @@
+﻿@model CoPilot.Models.RegisterModel
+@{
+    ViewBag.Title = "Account";
+    ViewBag.Message = "Wren Thicket Market";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="accountRegister">
+                <h4 class="panel-title">Create a new account</h4>
+            </div>
+            <div class="panel-body background75">
+                @using (Ajax.BeginForm("Register", "Account", new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.Replace,
+                        HttpMethod = "POST",
+                        OnBegin = "Validate",
+                        OnSuccess = "Success",
+                        OnFailure = "Failure"
+                    }, new { @id = "AccountRegister", @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div id="RequestAccountChange" class="form-group" style="display:none">
+                        <div class="col-md-10">
+                            <div class="text-danger">
+                                <p><b>An account containing the email address already exists, this type of account is only designed to receive newsletters and needs to be upgraded to a customer account to allow you to place orders, please request a manual upgrade from the manager.</b></p>
+                                <p>
+                                    <a href='@Url.Content("/Account/RequestAccountChange")'>Request Account Change</a>
+                                </p>
+                                <p><b>This request will send your data to the manager with autorization to upgrade your account type, this is to ensure your information security and the integrity of the website. Thank you for upgrading your account!</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="UserNameExists" class="form-group" style="display:none">
+                        <div class="col-md-10">
+                            <div class="text-danger">
+                                <p><b>An account containing this user name already exists.</b>
+                                </p>
+                                <p>
+                                    <b>Would you like to use the </b>@Html.ActionLink(linkText: "Lost Password Tool", actionName: "LostPassword", controllerName: "Account", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" }) <b>to reset your password?</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="EmailUserName" class="form-group" style="display:none">
+                        <div class="col-md-10">
+                            <div class="text-danger">
+                                <p><b>An account containing this email address already exists, did you forget your account user name?</b></p>
+                                <p>
+                                    <b>Would you like us use the </b> @Html.ActionLink(linkText: "Recover User Name Tool", actionName: "EmailUserName", controllerName: "Account", routeValues: new { }, htmlAttributes: new { @class = "btn-xs btn-cp" }) <b> to get the user name associated with this email in our records?</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <div id="update-message"></div>
+                        </div>
+                    </div>
+                    <div id ="form-controls">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.ValidationSummary(true)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <button type="submit" class="btn-xs btn-cp">Register</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.UserName)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.LastName)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.FirstName)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.EmailAddress, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.EmailAddress)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.Phone)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.StreetAddress, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.StreetAddress, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.StreetAddress)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.City, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.City, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.City)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.State, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.State, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.State)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PostalCode, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.PostalCode, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.PostalCode)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Country, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Country, new { @class = "form-control", @value = "United States" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.Country)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.Password)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ConfirmPassword, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                                <div class="text-danger">@Html.ValidationMessageFor(model => model.ConfirmPassword)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn-xs btn-cp">Register</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <b>Privacy Policy</b>
+                                <br/>
+                                We only store your name, address, telephone and email information. We do this as a convenience to you for the purpose of pre-ordering, and in case we need to contact you regarding the status of you order. Your information is confidential and will never be given out for any other purposes.
+                                We despise spam and junk mail as much as you do, but please be aware that we do send a weekly email reminding you the new pre-ordering period has begun as well as any “news”!
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    //Account/Register
+
+    $(function() {
+/*
+        $("#UserName").val("TomParker");
+        $("#LastName").val("Parker");
+        $("#FirstName").val("Tom");
+        $("#EmailAddress").val("tomparker@personaltelemetry.com");
+        $("#Phone").val("512-839-4224");
+        $("#StreetAddress").val("1435 N Woolsey Ave");
+        $("#City").val("Fayetteville");
+        $("#State").val("AR");
+        $("#PostalCode").val("72703");
+        $("#Country").val("United States");
+        $("#Status").val("1");
+        $("#Password").val("temp2050");
+        $("#ConfirmPassword").val("temp2050");
+*/
+    });
+
+    function Validate(data) {
+        return $("#AccountRegister").validate();
+    }
+
+    function Success(data) {
+        if ((typeof(data.success) !== "undefined") && (typeof(data.message) !== "undefined")) {
+            // check for successful registration here
+            if (data.success === true) {
+                alert(data.message);
+                window.location.href = "/Account/Login";
+            } else if (data.success === false) {
+                if (data.message === "RequestAccountChange") {
+                    $("#RequestAccountChange").show();
+                }
+                else if (data.message === "UserNameExists") {
+                    $("#UserNameExists").show();
+                }
+                else if (data.message === "EmailUserName") {
+                    $("#EmailUserName").show();
+                }
+            }
+        } else {
+            // there was an market account registration issue
+        }
+    }
+
+    function Failure(data) {
+        if (typeof(data.success) !== "undefined") {
+            // check for successful registration here
+            if (data.success === false) {
+            }
+        }
+    }
+
+    $("[id^='RequestAccountChange']").click(function () {
+        // send form data to manager
+        form = $("[id^='AccountRegister']").serialize();
+        model = {
+            UserName: $("input[id^='UserName']").val(),
+            LastName: $("input[id^='LastName']").val(),
+            FirstName: $("input[id^='FirstName']").val(),
+            EmailAddress: $("input[id^='EmailAddress']").val(),
+            Phone: $("input[id^='Phone']").val(),
+            StreetAddress: $("input[id^='StreetAddress']").val(),
+            City: $("input[id^='City']").val(),
+            State: $("input[id^='State']").val(),
+            PostalCode: $("input[id^='PostalCode']").val(),
+            Country: $("input[id^='Country']").val(),
+            Password: $("input[id^='Password']").val(),
+            ConfirmPassword: $("input[id^='ConfirmPassword']").val()
+        };
+        if (model !== undefined) {
+            var results = $.post("/Account/RequestAccountChange", { "model": model });
+            results.done(function (data, textStatus, jqXHR) {
+                // Successful requests get here
+                $("#RequestAccountChange").hide();
+                $("#form-controls").hide();
+                alert("Your request was succesfully sent the the market manager and will be processed as soon as possbile, thank you! You will now be redirected to the home page.");
+                window.location.href = "/Home/Index";
+            });
+            results.fail(function (jqXHR, textStatus, errorThrown) {
+                // failed requests get here
+                console.log("fail(%s, %s, %s)", jqXHR.toString(), textStatus, errorThrown.toString());
+            });
+            results.always(function (data, textStatus, jqXHR) {
+                // all requests get here
+                console.log("always(%s, %s, %s)", data.toString(), textStatus, jqXHR.toString());
+            });
+        }
+    });
+
+}

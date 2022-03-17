@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Wren Thicket Market - @ViewBag.Title</title>
+    <meta name="keywords" content="farmers market,produce" />
+    <meta name="description" content="Wren Thicket Market is a group of small family owned and operated farms located in the Northwest Arkansas area." />
+    <meta name="author" content="Personal Telemetry, LLC" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="~/Content/site.css" />
+    <link rel="stylesheet" href="~/Content/jquery.simple-dtpicker.css" />
+    <link rel="stylesheet" href="~/Content/ImageArea.css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @*@Styles.Render("~/Content/css")*@
+</head>
+<body>
+    <header></header>
+    @Html.Partial("App")
+    @RenderBody()
+    <footer></footer>
+
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/lodash.js"></script>"
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script src="~/Scripts/jquery.simple-dtpicker.js"></script>
+<script src="~/Scripts/jquery.imgareaselect.js"></script>
+<script src="~/Scripts/jquery.dragsort-0.5.2.js"></script>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+<script src="~/jquery.cp.js"></script>
+
+<script type="text/javascript">
+    var CKEDITOR_BASEPATH = '/Scripts/ckeditor/';
+
+    var vm = {
+        userName: @Html.Raw(Json.Encode(ViewBag.AppViewModel.UserName)),
+        userRole: @Html.Raw(Json.Encode(ViewBag.AppViewModel.UserRole)),
+        authenticated: @Html.Raw(Json.Encode(ViewBag.AppViewModel.Authenticated)),
+        businessOpen: @Html.Raw(Json.Encode(ViewBag.AppViewModel.BusinessOpen)),
+        debugEnabled: @Html.Raw(Json.Encode(ViewBag.AppViewModel.DebugEnabled)),
+        actions: @Html.Raw(Json.Encode(ViewBag.AppViewModel.ContentItems)),
+        cartItems: @Html.Raw(Json.Encode(ViewBag.ShoppingCartViewModel.CartItems)),
+        cartCount: @Html.Raw(Json.Encode(ViewBag.ShoppingCartViewModel.CartCount)),
+        cartSummary: @Html.Raw(Json.Encode(ViewBag.ShoppingCartViewModel.CartSummary)),
+        cartTotal: @Html.Raw(Json.Encode(ViewBag.ShoppingCartViewModel.CartTotal)),
+        searchTypeId: @Html.Raw(Json.Encode(ViewBag.StoreFrontViewModel.SearchTypeId)),
+        categoryId: @Html.Raw(Json.Encode(ViewBag.StoreFrontViewModel.CategoryId)),
+        partnerId: @Html.Raw(Json.Encode(ViewBag.StoreFrontViewModel.PartnerId)),
+        categories: @Html.Raw(Json.Encode(ViewBag.StoreFrontViewModel.Categories)),
+        partners: @Html.Raw(Json.Encode(ViewBag.StoreFrontViewModel.Partners)),
+        stories: @Html.Raw(Json.Encode(ViewBag.StoreFrontViewModel.Stories)),
+        showHidden: @Html.Raw(Json.Encode(ViewBag.AppViewModel.ShowHidden))
+    };
+
+    var messageBody = new String();
+
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/\{\{|\}\}|\{(\d+)\}/g, function (m, n) {
+            if (m === "{{") { return "{"; }
+            if (m === "}}") { return "}"; }
+            return args[n];
+        });
+    };
+
+    var UpdateElements = function (model) {
+        // update the user message
+        $wmsg = $("span[id^='username']");
+        if (($wmsg !== null) && ($wmsg !== "undefined")) {
+            $wmsg.html("Welcome " + vm.userName);
+        };
+        // update the market basket
+        result = "";
+        if (vm.cartCount > 0) {
+            result = vm.cartCount;
+        }
+        else {
+            result = "Empty";
+        }
+        $("#CartLabel").text("Basket");
+        $("#CartCount").text(result);
+
+        // update shopping basket
+        if (vm.businessOpen === "True" && vm.authenticated === "True") {
+            $('#shoppingbasket').show();
+        }
+        else {
+            $('#shoppingbasket').hide();
+        }
+        // update business open
+        if (vm.businessOpen === "True") {
+            $('#opensign').attr('src', '/Content/Images/preorderingopen2wht.png');
+            $("#welcomemessage").text("WELCOME TO OUR YEAR ROUND PRE-ORDER FARMERS' MARKET! Pre-orders placed online Monday through Thursday morning will be available for you to pick up from our vendors on Saturdays from 9am to 12 noon at 1041 South School Avenue in Fayetteville Arkansas. Please register or log in to place pre-orders and then check out the information on our market, farms and artisans.");
+        }
+        else {
+            $('#opensign').attr('src', '/Content/Images/preorderingclosed2wht.png');
+            //$("#welcomemessage").text("Sorry we missed you! This week’s pre-order period has ended. Pre-ordering is open from Monday at post time to Thursday 10 am. Feel free to use the ‘browse’ drop down below for the product lists and see what was available for pre-order. We do sell extra products from the tables on Saturday, if you do not get a pre-order in, please come by!");
+            $("#welcomemessage").text("WELCOME TO OUR YEAR ROUND PRE-ORDER FARMERS' MARKET! Pre-orders placed online Monday through Thursday morning will be available for you to pick up from our vendors on Saturdays from 9am to 12 noon at 1041 South School Avenue in Fayetteville Arkansas. Please register or log in to place pre-orders and then check out the information on our market, farms and artisans.");
+        }
+
+        // update debug message
+        if (vm.debugEnabled === "True") {
+            $wmsg = $("span[id^='debug-message']");
+            if (($wmsg !== null) && ($wmsg !== "undefined")) {
+                messageBody = "{0}, {1}".format("Debug Enabled", vm.debugEnabled);
+                // $wmsg.html(messageBody);
+            };
+        }
+
+        // update ShowHidden checkbox
+        if (vm.showHidden) $("#ShowHiddenObjects").attr("checked", vm.showHidden);
+    };
+
+    $(document).ready(function () {
+        console.log("document.load");
+    });
+
+    $(window).on('load', function () {
+        UpdateElements(vm);
+        console.log("window.load");
+    });
+
+    //off canvas
+    $('[data-toggle="offcanvas"]').click(function () {
+        $('.row-offcanvas').toggleClass('active');
+    });
+
+    var sm = new StoreManager();
+    $("select[id*='SelectStory']").click(function() { sm.GetStory($(this)); });
+    $("a[id*='filter']").click(function () { sm.GetProducts($(this)); });
+    $("button[id^='AddProductToCart']").click(function () { sm.AddProductToCart($(this)); });
+    $("a[id^='RemoveProductFromCart']").click(function () { sm.RemoveProductFromCart($(this));});
+    $("button[id^='UpdateOrderFromBasket']").click(function() { sm.UpdateOrderFromBasket($(this)); });
+    $("a[id^='RemoveProductFromOrder']").click(function() { sm.RemoveProductFromOrder($(this)); });
+    $("#UpdateOrder").click(function() { sm.UpdateOrder($(this)); });
+    $("select[id^='ItemOrderQty']").click(function() { sm.OrderQtyChange($(this)); });
+    $("button[id^='SavePartner']").click(function() { sm.SavePartner($(this)); });
+    $("button[id^='SaveProduct']").click(function() { sm.SaveProduct($(this)); });
+    $("button[id^='SelectAllPhotos']").click(function() { sm.SelectAllPhotos($(this)); });
+    $("button[id^='AddPhoto']").click(function() { sm.AddPhoto(); });
+    $("button[id^='ProductStatusActivate']").click(function() { sm.ProductStatusActivate(); });
+    $("button[id^='HighlightProducts']").click(function() { sm.HighlightProducts(); });
+    $("button[id^='SaveProductSettings']").click(function() { sm.SaveProductSettings(); });
+    $("input[id^='ShowHiddenObjects']").click(function() { sm.ShowHiddenObjects(); });
+    $("select[id^='ProductFilter']").click(function() { sm.ProductFilter(); });
+    $("select[id^='CategoryFilter']").click(function() { sm.CategoryFilter(); });
+    $("select[id^='PartnerFilter']").click(function() { sm.PartnerFilter(); });
+    $("button[id^='BuildUserProfiles']").click(function () { sm.BuildUserProfiles(); });
+    $("button[id^='BuildNewsLetter']").click(function () { sm.BuildNewsLetter(); });
+
+    // format event datetimes
+    $("input[id*='DateTime']").each(function() { $(this).appendDtpicker({"closeOnSelected": true, "closeButton": true, "dateFormat":"MM/DD/YYYY hh:mm", "amPmInTimeList": true}) });
+
+    @RenderSection("Scripts", false)
+
+</script>
+
+<script src="~/functions.js"></script>
+</body>
+</html>

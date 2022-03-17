@@ -1,0 +1,40 @@
+﻿@model CoPilot.Models.Product
+@{
+    ViewBag.Title = "Delete Product";
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="productCreate">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <p>
+                    <h3>Are you sure you want to delete the product titled <strong>@Model.Title</strong>?
+                    </h3>
+                </p>
+                <p>
+                    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn-xs btn-cp" })
+                    <button type="submit" class="btn-xs btn-cp">Delete</button>
+                </p>
+                @using (Html.BeginForm())
+                {
+                    @*@Html.LabelFor(model => model.Category.Name)*@
+                    <label class="control-label">Category</label>
+                    @Html.DisplayFor(model => model.Category.Name)<br/>
+                    @*@Html.LabelFor(model => model.Partner.Name)*@
+                    <label class="control-label">Parnter</label>
+                    @Html.DisplayFor(model => model.Partner.Name)<br/>
+                    @Html.LabelFor(model => model.Title, new { @class = "control-label" })
+                    @Html.DisplayFor(model => model.Title)<br/>
+                    @Html.LabelFor(model => model.Price, new { @class = "control-label" })
+                    @Html.DisplayFor(model => model.Price)<br/>
+                    @Html.LabelFor(model => model.ProductArtUrl, new { @class = "control-label" })
+                    @Html.DisplayFor(model => model.ProductArtUrl)<br/>
+                    @Html.LabelFor(model => model.Status, new { @class = "control-label" })
+                    @Html.DisplayFor(model => model.Status)<br/>
+                }
+            </div>
+        </div>
+    </div>
+</div>

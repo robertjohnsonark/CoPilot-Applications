@@ -1,0 +1,69 @@
+﻿@model CoPilot.Models.Order
+@{
+    ViewBag.Title = "Order Details";
+    var hasWeight = false;
+}
+<div class="container">
+    <div class="panel-group first-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="orderDetails">
+                <h4 class="panel-title">@ViewBag.Title</h4>
+            </div>
+            <div class="panel-body background75">
+                <p>
+                    @Html.ActionLink(linkText: "Back to List", actionName: "Index", controllerName: "Order", routeValues: new {}, htmlAttributes: new {@class = "btn-xs btn-cp"})
+                    @Html.ActionLink(linkText: "Edit", actionName: "Edit", controllerName: "Order", routeValues: new { id = Model.OrderId }, htmlAttributes: new { @class = "btn-xs btn-cp" })
+                </p>
+                <p>
+                    <b>Account Info:</b><br/>
+                    @ViewBag.FullName<br/>
+                    @ViewBag.EmailAddress<br/>
+                    @ViewBag.Phone<br/>
+                </p>
+                <br/>
+                <table id="cart-summary" class="table table-bordered table-responsive table-hover table-striped">
+                    <tr>
+                        <th>Partner</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price (each)</th>
+                        <th>Total</th>
+                    </tr>
+                    @foreach (var item in Model.OrderDetails)
+                    {
+                        <tr id="row-@item.OrderDetailId">
+                            <td>@Html.ActionLink(linkText: item.Product.Partner.Name, actionName: "Partner", controllerName: "Home", routeValues: new {partnerId = item.Product.PartnerId}, htmlAttributes: new {@class = "btn-xs btn-cp", @title = item.Product.Partner.Name})</td>
+                            <td>@Html.ActionLink(linkText: item.Product.Title, actionName: "Details", controllerName: "Store", routeValues: new {productid = item.ProductId}, htmlAttributes: new {@class = "btn-xs btn-cp"})</td>
+                            <td id="item-count-@item.OrderDetailId">@item.Quantity</td>
+                            <td>@item.Product.Price</td>
+                            @if (item.Product.SoldByWeight)
+                            {
+                                <td>TBD</td>
+                                hasWeight = true;
+                            }
+                            else
+                            {
+                                <td>@((item.UnitPrice*item.Quantity).ToString("c"))</td>
+                            }
+                        </tr>
+                    }
+                    <tr>
+                        <td class="text-center"><b>Total</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        @if (hasWeight)
+                        {
+                            <td><b>TBD</b></td>
+                        }
+                        else
+                        {
+                            <td id="cart-total"><b>@Model.Total</b></td>
+                        }
+                    </tr>
+                </table>
+                <p>TBD: Order total may vary, some meat prices are listed per pound and actual meat price will vary depending on the weight of the package. See details of the individual product to estimate package size</p>
+            </div>
+        </div>
+    </div>
+</div>
